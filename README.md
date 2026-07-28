@@ -2,6 +2,10 @@
 
 > A fast-paced, cyberpunk-themed endless runner built entirely with React and the Web Audio API — no game engine, no canvas, no dependencies beyond React itself.
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-aiki--three.vercel.app-00f5ff?style=for-the-badge&logo=vercel)](https://aiki-three.vercel.app/)
+
+**🌐 Live Game URL**: [https://aiki-three.vercel.app/](https://aiki-three.vercel.app/)
+
 ---
 
 ## 🎮 What is AIKI?
