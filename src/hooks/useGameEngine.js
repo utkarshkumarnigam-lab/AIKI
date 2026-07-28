@@ -34,8 +34,8 @@ const MAX_FALL_SPEED   = 16;
 
 const SCORE_PER_FRAME  = 0.08;
 
-const SLIDE_DURATION   = 39;  // frames (~0.65s at 60fps)
-const SLIDE_COOLDOWN   = 72;  // frames (~1.2s cooldown)
+const SLIDE_DURATION   = 26;  // frames (~0.43s at 60fps)
+const SLIDE_COOLDOWN   = 10;  // frames (~0.16s recovery window)
 
 export const LEVEL_NAMES = {
   1: 'NEON DISTRICT',
@@ -46,8 +46,8 @@ export const LEVEL_NAMES = {
 export const LEVEL_CONFIGS = {
   1: {
     baseSpeed: 5,
-    maxSpeed: 20,        // much higher ceiling — keeps accelerating
-    speedIncrement: 0.004, // ~8x faster ramping than before
+    maxSpeed: 12,        // comfortable ceiling for level 1
+    speedIncrement: 0.001, // slow, gradual ramp
     obstacleMinGap: 1000,
     obstacleMaxGap: 1800,
     collectibleMinGap: 400,
@@ -55,8 +55,8 @@ export const LEVEL_CONFIGS = {
   },
   2: {
     baseSpeed: 7.5,
-    maxSpeed: 28,
-    speedIncrement: 0.007,
+    maxSpeed: 17,
+    speedIncrement: 0.0018,
     obstacleMinGap: 800,
     obstacleMaxGap: 1400,
     collectibleMinGap: 350,
@@ -64,8 +64,8 @@ export const LEVEL_CONFIGS = {
   },
   3: {
     baseSpeed: 10.5,
-    maxSpeed: 40,
-    speedIncrement: 0.012,
+    maxSpeed: 24,
+    speedIncrement: 0.003,
     obstacleMinGap: 600,
     obstacleMaxGap: 1000,
     collectibleMinGap: 300,
@@ -328,12 +328,14 @@ export function useGameEngine() {
     });
   }, [spawnPopup]);
 
-  // ── Jump ──────────────────────────────────────────────────────────────────
   const jump = useCallback(() => {
     const s = stateRef.current;
     if (s.isOnGround && !s.dead) {
       s.vy = JUMP_FORCE;
       s.isOnGround = false;
+      s.slideFrames = 0;
+      s.slideCooldown = 0;
+      setIsSliding(false);
       setIsOnGround(false);
       s.jumpsCount += 1;
       playSFX('jump');
@@ -879,6 +881,9 @@ export function useGameEngine() {
   // Keyboard input
   useEffect(() => {
     const onKey = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || leaderboardQualifyScore !== null) {
+        return;
+      }
       if (e.code === 'Space' || e.code === 'ArrowUp') {
         e.preventDefault();
         if (gameState === GAME_STATE.RUNNING) jump();
@@ -896,7 +901,7 @@ export function useGameEngine() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [gameState, jump, slide, startGame, activateAbility]);
+  }, [gameState, jump, slide, startGame, activateAbility, leaderboardQualifyScore]);
 
   const purchaseUpgrade = useCallback((key) => {
     const currentLevel = upgrades[key] || 0;
@@ -938,7 +943,8 @@ export function useGameEngine() {
       return next;
     });
     setLeaderboardQualifyScore(null);
-  }, [leaderboardQualifyScore]);
+    goHome();
+  }, [leaderboardQualifyScore, goHome]);
 
   const cancelLeaderboardSubmission = useCallback(() => {
     setLeaderboardQualifyScore(null);

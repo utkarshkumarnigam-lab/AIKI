@@ -3,7 +3,7 @@
  * Boot decryption sequence modal. Initiates audio on user click.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const logMessages = [
   { threshold: 5, text: 'INIT DECRYPT: aiki_core.bin...' },
@@ -18,19 +18,21 @@ export default function LoadingScreen({ onEnter }) {
   const [progress, setProgress] = useState(0);
   const [logs, setLogs] = useState([]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        const next = prev + Math.floor(Math.random() * 8) + 2;
-        if (next >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return next;
-      });
-    }, 120);
+  const timerRef = useRef(null);
 
-    return () => clearInterval(interval);
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) return 100;
+        const inc = Math.floor(Math.random() * 12) + 6;
+        const next = prev + inc;
+        return next >= 100 ? 100 : next;
+      });
+    }, 60);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, []);
 
   useEffect(() => {

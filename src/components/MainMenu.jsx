@@ -74,6 +74,21 @@ export default function MainMenu({
               <span className="btn-desc">Stats & Achievements</span>
             </div>
           </button>
+
+          {/* GitHub Repository Option */}
+          <a
+            href="https://github.com/utkarshkumarnigam-lab/AIKI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="menu-btn menu-btn--github"
+            style={{ textDecoration: 'none' }}
+          >
+            <span className="btn-icon">🐙</span>
+            <div className="btn-text">
+              <span className="btn-title">GITHUB REPO</span>
+              <span className="btn-desc">Source Code & Protocol</span>
+            </div>
+          </a>
         </div>
 
         {/* Quick controls help panel at bottom */}
@@ -84,7 +99,7 @@ export default function MainMenu({
             <span className="control-label">JUMP (HOLD FOR HEIGHT)</span>
           </div>
           <div className="quick-row">
-            <span className="control-node"><kbd>Q/W/E/R</kbd> or <kbd>1/2/3/4</kbd></span>
+            <span className="control-node"><kbd>Q/W</kbd> or <kbd>1/2</kbd></span>
             <span className="control-label">ACTIVATE ABILITIES</span>
           </div>
         </footer>
