@@ -68,14 +68,16 @@ body::after {
    ============================================================ */
 .game-wrapper {
   position: relative;
-  width: min(900px, 100vw);
-  height: min(520px, 100vh);
+  width: min(1360px, 98vw);
+  height: auto;
+  max-height: 93vh;
+  aspect-ratio: 900 / 520;
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow:
-    0 0 40px rgba(0, 245, 255, 0.15),
-    0 0 80px rgba(180, 74, 255, 0.08),
+    0 0 50px rgba(0, 245, 255, 0.22),
+    0 0 90px rgba(180, 74, 255, 0.14),
     inset 0 0 60px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   user-select: none;

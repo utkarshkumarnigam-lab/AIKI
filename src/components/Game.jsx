@@ -90,7 +90,6 @@ export default function Game() {
       <div
         id="game-wrapper"
         className={`game-wrapper ${hitFlash && settings.glitchEffects ? 'game-wrapper--hit screen-shake' : ''} ${isTransitioning && settings.glitchEffects ? 'glitch-active screen-shake' : ''}`}
-        style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
         onPointerDown={handleInteract}
         role="application"
         aria-label="AIKI ESCAPE: CYBER BREAK game"
