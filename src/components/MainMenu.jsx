@@ -74,21 +74,6 @@ export default function MainMenu({
               <span className="btn-desc">Stats & Achievements</span>
             </div>
           </button>
-
-          {/* GitHub Repository Option */}
-          <a
-            href="https://github.com/utkarshkumarnigam-lab/AIKI"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="menu-btn menu-btn--github"
-            style={{ textDecoration: 'none' }}
-          >
-            <span className="btn-icon">🐙</span>
-            <div className="btn-text">
-              <span className="btn-title">GITHUB REPO</span>
-              <span className="btn-desc">Source Code & Protocol</span>
-            </div>
-          </a>
         </div>
 
         {/* Quick controls help panel at bottom */}
